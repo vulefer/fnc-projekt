@@ -1,5 +1,5 @@
 class Fighter{
     static printajPoruku(){
-        console.log("SULE SISO!");
+        console.log("ovdje cemo imat metode za borce");
     }
 }
