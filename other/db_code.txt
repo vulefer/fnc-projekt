@@ -1,0 +1,87 @@
+CREATE DATABASE IF NOT EXISTS fnc_database;
+USE fnc_database;
+
+-- User
+CREATE TABLE user (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    firstname VARCHAR(50),
+    lastname VARCHAR(50),
+    role ENUM('admin', 'user'),
+    password VARCHAR(100),
+    email VARCHAR(100)
+);
+
+-- Gym
+CREATE TABLE gym (
+    gym_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    contact VARCHAR(100)
+);
+
+-- Fighter
+CREATE TABLE fighter (
+    fighter_id INT AUTO_INCREMENT PRIMARY KEY,
+    firstname VARCHAR(50),
+    lastname VARCHAR(50),
+    date_of_birth DATE,
+    nationality VARCHAR(50),
+    gender ENUM('M', 'F'),
+    age_category ENUM('junior', 'senior'),
+    weight ENUM('strawweight (52.2)','flyweight (56.7)','bantamweight (61.2)','featherweight (65.8)','lightweight (70.3)','welterweight (77.1)','middleweight (83.9)','light-heavyweight (93.0)','heavyweight (120.2)'),
+    score VARCHAR(50),
+    gym_id INT,
+    FOREIGN KEY (gym_id) REFERENCES gym(gym_id)
+);
+
+-- Tournament
+CREATE TABLE tournament (
+    tournament_id INT AUTO_INCREMENT PRIMARY KEY,
+    tournament_name VARCHAR(100),
+    tournament_type VARCHAR(50),
+    tournament_date DATE
+);
+
+-- Registration: borac se registrira na turnir, plaća kotizaciju
+CREATE TABLE registration (
+    registration_id INT AUTO_INCREMENT PRIMARY KEY,
+    fighter_id INT NOT NULL,
+    tournament_id INT NOT NULL,
+    kotizacija_placena BOOLEAN,
+    FOREIGN KEY (fighter_id) REFERENCES fighter(fighter_id),
+    FOREIGN KEY (tournament_id) REFERENCES tournament(tournament_id)
+);
+
+-- User owns fighter
+CREATE TABLE user_fighter (
+    user_id INT NOT NULL,
+    fighter_id INT NOT NULL,
+    PRIMARY KEY (user_id, fighter_id),
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (fighter_id) REFERENCES fighter(fighter_id)
+);
+
+-- Match (meč)
+CREATE TABLE match (
+    match_id INT AUTO_INCREMENT PRIMARY KEY,
+    fighter1_id INT NULL,
+    fighter2_id INT NULL,
+    winner_id INT NULL,
+    loser_id INT NULL,
+    fighter1_from_match INT NULL,
+    fighter2_from_match INT NULL,
+    phase ENUM('1/64', '1/32', '1/16', '1/8', '1/4', '1/2', 'finale', '3rd'),
+    win_method ENUM('KO/TKO', 'SUB', 'DEC', 'DOCTOR_STOPPAGE', 'DQ', 'FORFEIT'),
+    age_category ENUM('junior', 'senior'),
+    weight ENUM('strawweight (52.2)','flyweight (56.7)','bantamweight (61.2)','featherweight (65.8)','lightweight (70.3)','welterweight (77.1)','middleweight (83.9)','light-heavyweight (93.0)','heavyweight (120.2)'),
+    gender ENUM('M', 'F'),
+    in_bracket_id INT,
+    tournament_id INT,
+    FOREIGN KEY (fighter1_id) REFERENCES fighter(fighter_id),
+    FOREIGN KEY (fighter2_id) REFERENCES fighter(fighter_id),
+    FOREIGN KEY (winner_id) REFERENCES fighter(fighter_id),
+    FOREIGN KEY (loser_id) REFERENCES fighter(fighter_id),
+    FOREIGN KEY (fighter1_from_match) REFERENCES match(match_id),
+    FOREIGN KEY (fighter2_from_match) REFERENCES match(match_id),
+    FOREIGN KEY (tournament_id) REFERENCES tournament(tournament_id)
+);
