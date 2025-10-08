@@ -26,8 +26,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 const fighterRouter = require('./routes/fighter.routes.js');
-app.use('/fighters', fighterRouter);
+const gymRouter = require('./routes/gym.routes.js');
 
+app.use('/fighters', fighterRouter);
+app.use('/gym', gymRouter);
 
 app.listen(8080);
 console.log('Server is running on http://localhost:8080');
