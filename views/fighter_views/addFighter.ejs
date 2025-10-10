@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Fighter</title>
+</head>
+<body>
+    <h1>Add New Fighter</h1>
+    
+    <form action="/fighters" method="POST">
+        <div>
+            <label for="firstname">Firstname:</label>
+            <input type="text" id="firstname" name="firstname" required>
+        </div>
+        
+        <div>
+            <label for="lastname">Lastname:</label>
+            <input type="text" id="lastname" name="lastname">
+        </div>
+        <div>
+            <label for="date_of_birth">Date of birth:</label>
+            <input type="date" id="date_of_birth" name="date_of_birth">
+        </div>
+        <div>
+            <label for="nationality">Nationality:</label>
+            <input type="text" id="nationality" name="nationality">
+        </div>
+        <div>
+            <label>Gender:</label>
+            <input type="radio" id="male" name="gender" value="M" required checked>
+            <label for="male">M</label>
+            <input type="radio" id="female" name="gender" value="F" required>
+            <label for="female">F</label>
+        </div>
+        <div>
+            <label for="age_category">Age Category:</label>
+            <select id="age_category" name="age_category" required>
+                <option value="senior" selected>Senior</option>
+                <option value="junior">Junior</option>
+            </select>
+        </div>
+        <div class="weight-category">
+            <label for="weight">Weight Category:</label>
+            <select id="weight" name="weight" required>
+                <option value="strawweight (52.2)" selected>Strawweight (52.2 kg)</option>
+                <option value="flyweight (56.7)">Flyweight (56.7 kg)</option>
+                <option value="bantamweight (61.2)">Bantamweight (61.2 kg)</option>
+                <option value="featherweight (65.8)">Featherweight (65.8 kg)</option>
+                <option value="lightweight (70.3)">Lightweight (70.3 kg)</option>
+                <option value="welterweight (77.1)">Welterweight (77.1 kg)</option>
+                <option value="middleweight (83.9)">Middleweight (83.9 kg)</option>
+                <option value="light-heavyweight (93.0)">Light Heavyweight (93.0 kg)</option>
+                <option value="heavyweight (120.2)">Heavyweight (120.2 kg)</option>
+            </select>
+        </div>
+        <div>
+            <label for="score">Score:</label>
+            <input type="text" id="score" name="score">
+        </div>
+        <div>
+            <label for="gym_id">Gym:</label>
+            <select id="gym_id" name="gym_id" required>
+                <%gyms.forEach((gym)=>{%>
+                    <option value="<%=gym.gym_id%>"><%=gym.name%></option>
+                <%});%>
+            </select>
+        </div>
+
+        <button type="submit">Add Fighter</button>
+    </form>
+</body>
+</html>

@@ -16,4 +16,26 @@ class Fighter{
             connection.release();
         }
     }
+
+    //Ispis svih fightera -- TEST
+    //Vraca objekt sa svim atributima fightera
+    static async getAllFighters() {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.execute(
+                'SELECT * FROM fighter'
+            );
+
+            return rows;
+            
+        } catch (error) {
+            console.error('Error fetching gyms:', error);
+            throw new Error('Database Error');
+        } finally {
+            connection.release();
+        }
+    }
 }
+
+
+module.exports = Fighter; 
