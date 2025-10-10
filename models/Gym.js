@@ -19,8 +19,24 @@ class Gym{
         }
     };
 
+    //GetAllGyms vraca array objekata tipa {gym_id, name}
+    static async getAllGyms() {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.execute(
+                'SELECT gym_id, name FROM gym'
+            );
 
-    //static async getAllGyms() {};
+            return rows;
+
+        } catch (error) {
+            console.error('Error fetching gyms:', error);
+            throw new Error('Database Error');
+        } finally {
+            connection.release();
+        }
+    }
+
 
     static async deleteGym(gymId){
         const connection = await pool.getConnection();
